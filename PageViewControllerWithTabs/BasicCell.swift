@@ -14,15 +14,15 @@ class BasicCell: UICollectionViewCell {
         let lbl = UILabel()
         return lbl
     }()
-    
-    var indicatorView: UIView!
 
     override var isSelected: Bool {
-        
         didSet{
-            UIView.animate(withDuration: 0.30) {
-                self.indicatorView.backgroundColor = self.isSelected ? UIColor.blue : UIColor.clear
-                self.layoutIfNeeded()
+            if self.isSelected {
+                self.contentView.backgroundColor = UIColor.blue
+                self.titleLabel.textColor = UIColor.white
+            } else {
+                self.contentView.backgroundColor = UIColor.clear
+                self.titleLabel.textColor = UIColor.black
             }
         }
         
@@ -37,9 +37,6 @@ class BasicCell: UICollectionViewCell {
         
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
-        
-        setupIndicatorView()
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,13 +47,4 @@ class BasicCell: UICollectionViewCell {
         super.prepareForReuse()
         titleLabel.text = ""
     }
-   
-    func setupIndicatorView() {
-        indicatorView = UIView()
-        addSubview(indicatorView)
-        
-        addConstraintsWithFormatString(formate: "H:|[v0]|", views: indicatorView)
-        addConstraintsWithFormatString(formate: "V:[v0(3)]|", views: indicatorView)
-    }
-    
 }
