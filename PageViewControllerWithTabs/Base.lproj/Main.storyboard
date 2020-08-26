@@ -43,7 +43,6 @@
                         <viewLayoutGuide key="safeArea" id="3XK-La-SFa"/>
                     </view>
                     <connections>
-                        <outlet property="containerView" destination="2YZ-2X-6u5" id="UZs-2f-mNB"/>
                         <outlet property="menuBarView" destination="WKZ-DR-kMG" id="evu-pD-yIM"/>
                     </connections>
                 </viewController>

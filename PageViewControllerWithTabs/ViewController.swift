@@ -12,20 +12,27 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var menuBarView: MenuTabsView!
     
-    
-    
     var currentIndex: Int = 0
     var tabs = ["Menu TAB 1","Menu TAB 2","Menu TAB 3","Menu TAB 4","Menu TAB 5","Menu TAB 6"]
     var pageController: UIPageViewController!
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.destination {
+            
+            case let pageController as UIPageViewController:
+                self.pageController = pageController
+                
+            default:
+                break
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         menuBarView.dataArray = tabs
         menuBarView.isSizeToFitCellsNeeded = true
         menuBarView.collView.backgroundColor = UIColor.init(white: 0.97, alpha: 0.97)
-        
-        presentPageVCOnView()
         
         menuBarView.menuDelegate = self
         pageController.delegate = self
@@ -60,16 +67,6 @@ class ViewController: UIViewController {
         
     }
      */
- 
-    func presentPageVCOnView() {
-        
-        self.pageController = storyboard?.instantiateViewController(withIdentifier: "PageControllerVC") as! PageControllerVC
-        self.pageController.view.frame = CGRect.init(x: 0, y: menuBarView.frame.maxY, width: self.view.frame.width, height: self.view.frame.height - menuBarView.frame.maxY)
-        self.addChildViewController(self.pageController)
-        self.view.addSubview(self.pageController.view)
-        self.pageController.didMove(toParentViewController: self)
-        
-    }
     
     //Present ViewController At The Given Index
     
