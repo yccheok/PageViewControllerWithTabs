@@ -107,7 +107,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
 
         }
         
-        return CGSize.init(width: (self.frame.width - 10)/CGFloat(dataArray.count), height: self.frame.height)
+        return CGSize.init(width: (self.frame.width)/CGFloat(dataArray.count), height: self.frame.height)
     }
     
     
@@ -129,7 +129,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 5, 0, 5)
+        return UIEdgeInsetsMake(0, 0, 0, 0)
     }
 
 }
