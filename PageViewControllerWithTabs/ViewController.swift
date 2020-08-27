@@ -14,7 +14,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var menuTabsBottomView: UIView!
     
     var currentIndex: Int = 0
-    var tabs = ["All","Calendar","Home","Work"]
+    var tabs = [
+        TabInfo(name: "All", color: 0xff5481e6),
+        TabInfo(name: "Calendar", color: 0xff7cb342),
+        TabInfo(name: "Home", color: 0xffe53935),
+        TabInfo(name: "Work", color: 0xfffb8c00)
+    ]
+    
     var pageController: UIPageViewController!
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -85,7 +91,7 @@ class ViewController: UIViewController {
         }
         
         let contentVC = storyboard?.instantiateViewController(withIdentifier: "ContentVC") as! ContentVC
-        contentVC.strTitle = tabs[index]
+        contentVC.strTitle = tabs[index].name
         contentVC.pageIndex = index
         currentIndex = index
         return contentVC
@@ -105,7 +111,7 @@ extension ViewController: MenuBarDelegate {
         // If selected Index is other than Selected one, by comparing with current index, page controller goes either forward or backward.
         
         if index != currentIndex {
-            menuTabsBottomView.backgroundColor = UIColor.red
+            menuTabsBottomView.backgroundColor = Utils.intToUIColor(argbValue: tabs[index].color)
             
             if index > currentIndex {
                 self.pageController.setViewControllers([viewController(At: index)!], direction: .forward, animated: true, completion: nil)

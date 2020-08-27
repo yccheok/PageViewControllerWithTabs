@@ -10,6 +10,8 @@ import UIKit
 
 class BasicCell: UICollectionViewCell {
     
+    var tabInfo: TabInfo?
+    
     let titleLabel: UILabel = {
         let lbl = UILabel()
         return lbl
@@ -38,7 +40,7 @@ class BasicCell: UICollectionViewCell {
     
     private func select(_ selected: Bool) {
         if (selected) {
-            self.contentView.backgroundColor = UIColor.red
+            self.contentView.backgroundColor = Utils.intToUIColor(argbValue: tabInfo!.color)
             self.titleLabel.textColor = UIColor.white
         } else {
             self.contentView.backgroundColor = UIColor.gray

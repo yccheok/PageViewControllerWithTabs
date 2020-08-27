@@ -36,7 +36,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
 
-    var dataArray: [String] = [] {
+    var dataArray: [TabInfo] = [] {
         didSet{
             self.collView.reloadData()
         }
@@ -85,7 +85,9 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? BasicCell {
-            cell.titleLabel.text = dataArray[indexPath.item]
+            cell.titleLabel.text = dataArray[indexPath.item].name
+            cell.tabInfo = dataArray[indexPath.item]
+            
             return cell
         }
         
@@ -105,7 +107,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             let sizeee = CGSize.init(width: 500, height: self.frame.height)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             
-            let str = dataArray[indexPath.item]
+            let str = dataArray[indexPath.item].name
             
             let estimatedRect = NSString.init(string: str).boundingRect(with: sizeee, options: options, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 23)], context: nil)
         

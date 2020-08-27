@@ -7,3 +7,9 @@
 //
 
 import Foundation
+import UIKit
+
+struct TabInfo {
+    var name: String
+    var color: Int
+}
