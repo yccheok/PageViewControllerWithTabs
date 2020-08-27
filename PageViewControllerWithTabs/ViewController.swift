@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var menuBarView: MenuTabsView!
     
     var currentIndex: Int = 0
-    var tabs = ["Menu TAB 1","Menu TAB 2","Menu TAB 3","Menu TAB 4","Menu TAB 5","Menu TAB 6"]
+    var tabs = ["All","Calendar","Home","Work"]
     var pageController: UIPageViewController!
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

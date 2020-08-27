@@ -103,7 +103,9 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             
             let estimatedRect = NSString.init(string: str).boundingRect(with: sizeee, options: options, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 23)], context: nil)
         
-            return CGSize.init(width: estimatedRect.size.width, height: self.frame.height)
+            return CGSize.init(
+                width: max(44, estimatedRect.size.width),
+                height: self.frame.height)
 
         }
         
