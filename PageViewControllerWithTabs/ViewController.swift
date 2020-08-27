@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     }
     
     func debug() {
-        menuTabsView.select(2)
+        print("debug")
     }
     
     /*

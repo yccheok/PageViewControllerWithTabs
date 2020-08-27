@@ -19,6 +19,15 @@ class ContentVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameLabel.text = strTitle
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ContentVC.nameLabelTap))
+        nameLabel.isUserInteractionEnabled = true
+        nameLabel.addGestureRecognizer(tap)
     }
 
+    @objc func nameLabelTap(sender:UITapGestureRecognizer) {
+        if let viewController = self.parent?.parent as? ViewController {
+            viewController.debug()
+        }
+    }
 }
