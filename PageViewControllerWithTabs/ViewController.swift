@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var menuBarView: MenuTabsView!
+    @IBOutlet weak var menuTabsView: MenuTabsView!
+    @IBOutlet weak var menuTabsBottomView: UIView!
     
     var currentIndex: Int = 0
     var tabs = ["All","Calendar","Home","Work"]
@@ -30,23 +31,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        menuBarView.dataArray = tabs
-        menuBarView.isSizeToFitCellsNeeded = true
-        menuBarView.collView.backgroundColor = UIColor.init(white: 0.97, alpha: 0.97)
+        menuTabsView.dataArray = tabs
+        menuTabsView.isSizeToFitCellsNeeded = true
+        menuTabsView.collView.backgroundColor = UIColor.init(white: 0.97, alpha: 0.97)
         
-        menuBarView.menuDelegate = self
+        menuTabsView.menuDelegate = self
         pageController.delegate = self
         pageController.dataSource = self
-        
-        //For Intial Display
-        menuBarView.collView.selectItem(at: IndexPath.init(item: 0, section: 0), animated: true, scrollPosition: .centeredVertically)
-        pageController.setViewControllers([viewController(At: 0)!], direction: .forward, animated: true, completion: nil)
         
         // With CallBack Function...
         //menuBarView.menuDidSelected = myLocalFunc(_:_:)
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // For Intial Display. Need to perform this @ viewDidAppear. If not, scrolling will not happen.
+        let initialIndex = 2
+        menuTabsView.select(initialIndex)
+    }
+    
+    func debug() {
+        menuTabsView.select(2)
+    }
     
     /*
      // Call back function
@@ -72,7 +80,7 @@ class ViewController: UIViewController {
     
     func viewController(At index: Int) -> UIViewController? {
         
-        if((self.menuBarView.dataArray.count == 0) || (index >= self.menuBarView.dataArray.count)) {
+        if((self.menuTabsView.dataArray.count == 0) || (index >= self.menuTabsView.dataArray.count)) {
             return nil
         }
         
@@ -97,14 +105,15 @@ extension ViewController: MenuBarDelegate {
         // If selected Index is other than Selected one, by comparing with current index, page controller goes either forward or backward.
         
         if index != currentIndex {
-
+            menuTabsBottomView.backgroundColor = UIColor.red
+            
             if index > currentIndex {
                 self.pageController.setViewControllers([viewController(At: index)!], direction: .forward, animated: true, completion: nil)
             }else {
                 self.pageController.setViewControllers([viewController(At: index)!], direction: .reverse, animated: true, completion: nil)
             }
 
-            menuBarView.collView.scrollToItem(at: IndexPath.init(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            menuTabsView.collView.scrollToItem(at: IndexPath.init(item: index, section: 0), at: .centeredHorizontally, animated: true)
 
         }
 
@@ -146,8 +155,8 @@ extension ViewController: UIPageViewControllerDataSource, UIPageViewControllerDe
             if completed {
                 let cvc = pageViewController.viewControllers!.first as! ContentVC
                 let newIndex = cvc.pageIndex
-                menuBarView.collView.selectItem(at: IndexPath.init(item: newIndex, section: 0), animated: true, scrollPosition: .centeredVertically)
-                menuBarView.collView.scrollToItem(at: IndexPath.init(item: newIndex, section: 0), at: .centeredHorizontally, animated: true)
+                menuTabsView.collView.selectItem(at: IndexPath.init(item: newIndex, section: 0), animated: true, scrollPosition: .centeredVertically)
+                menuTabsView.collView.scrollToItem(at: IndexPath.init(item: newIndex, section: 0), at: .centeredHorizontally, animated: true)
             }
         }
         
