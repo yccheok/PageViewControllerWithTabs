@@ -17,13 +17,7 @@ class BasicCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet{
-            if self.isSelected {
-                self.contentView.backgroundColor = UIColor.blue
-                self.titleLabel.textColor = UIColor.white
-            } else {
-                self.contentView.backgroundColor = UIColor.clear
-                self.titleLabel.textColor = UIColor.black
-            }
+            select(self.isSelected)
         }
         
     }
@@ -39,6 +33,17 @@ class BasicCell: UICollectionViewCell {
         addConstraint(NSLayoutConstraint.init(item: titleLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
         
         BasicCell.topRoundCorners(self.contentView)
+        select(false)
+    }
+    
+    private func select(_ selected: Bool) {
+        if (selected) {
+            self.contentView.backgroundColor = UIColor.red
+            self.titleLabel.textColor = UIColor.white
+        } else {
+            self.contentView.backgroundColor = UIColor.gray
+            self.titleLabel.textColor = UIColor.black
+        }
     }
     
     private static func topRoundCorners(_ view: UIView) {
