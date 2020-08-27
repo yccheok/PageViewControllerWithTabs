@@ -60,6 +60,11 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         customIntializer()
     }
     
+    public func select(_ index: Int) {
+        let indexPath = IndexPath(item: index, section: 0)
+        self.collView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        self.collectionView(self.collView, didSelectItemAt: indexPath)
+    }
     
     private func customIntializer () {
         
@@ -68,7 +73,6 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         addConstraintsWithFormatString(formate: "V:|[v0]|", views: collView)
         addConstraintsWithFormatString(formate: "H:|[v0]|", views: collView)
         backgroundColor = .clear
-        
     }
     
     
