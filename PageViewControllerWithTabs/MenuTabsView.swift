@@ -15,15 +15,17 @@ protocol MenuBarDelegate {
 
 class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
-   lazy var collView: UICollectionView = {
+    lazy var collView: UICollectionView = {
     
         let layOut = UICollectionViewFlowLayout()
+        layOut.scrollDirection = .horizontal
+
         let cv = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: layOut)
         cv.showsHorizontalScrollIndicator = false
-        layOut.scrollDirection = .horizontal
         cv.backgroundColor = .white
         cv.delegate = self
         cv.dataSource = self
+        
         return cv
     }()
     
@@ -118,7 +120,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -133,5 +135,4 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0, 0, 0)
     }
-
 }
