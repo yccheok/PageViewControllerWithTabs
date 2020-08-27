@@ -24,26 +24,37 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2YZ-2X-6u5">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="48" width="375" height="619"/>
                                 <connections>
                                     <segue destination="pKn-26-H6X" kind="embed" id="dzn-eq-bjq"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9w-d6-hJ4">
+                                <rect key="frame" x="0.0" y="44" width="375" height="4"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="Nmc-GF-Kii"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="WKZ-DR-kMG" firstAttribute="leading" secondItem="3XK-La-SFa" secondAttribute="leading" id="8kh-Gg-ROP"/>
-                            <constraint firstItem="2YZ-2X-6u5" firstAttribute="top" secondItem="WKZ-DR-kMG" secondAttribute="bottom" id="AHM-fi-Z2w"/>
-                            <constraint firstItem="3XK-La-SFa" firstAttribute="trailing" secondItem="WKZ-DR-kMG" secondAttribute="trailing" id="M2a-QZ-KZA"/>
+                            <constraint firstItem="s9w-d6-hJ4" firstAttribute="leading" secondItem="3XK-La-SFa" secondAttribute="leading" id="Ltf-GR-Cqd"/>
+                            <constraint firstItem="WKZ-DR-kMG" firstAttribute="trailing" secondItem="3XK-La-SFa" secondAttribute="trailing" id="M2a-QZ-KZA"/>
                             <constraint firstItem="2YZ-2X-6u5" firstAttribute="bottom" secondItem="3XK-La-SFa" secondAttribute="bottom" id="ODN-D4-c8b"/>
+                            <constraint firstItem="2YZ-2X-6u5" firstAttribute="top" secondItem="s9w-d6-hJ4" secondAttribute="bottom" id="TWe-nK-tO2"/>
                             <constraint firstItem="2YZ-2X-6u5" firstAttribute="leading" secondItem="3XK-La-SFa" secondAttribute="leading" id="bR0-Ps-gm8"/>
                             <constraint firstItem="WKZ-DR-kMG" firstAttribute="top" secondItem="3XK-La-SFa" secondAttribute="top" id="iIm-aI-OoA"/>
+                            <constraint firstItem="s9w-d6-hJ4" firstAttribute="top" secondItem="WKZ-DR-kMG" secondAttribute="bottom" id="jCO-sC-2ad"/>
                             <constraint firstItem="2YZ-2X-6u5" firstAttribute="trailing" secondItem="3XK-La-SFa" secondAttribute="trailing" id="mIT-yy-Rk8"/>
+                            <constraint firstItem="s9w-d6-hJ4" firstAttribute="trailing" secondItem="3XK-La-SFa" secondAttribute="trailing" id="mQA-af-ZjE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3XK-La-SFa"/>
                     </view>
                     <connections>
-                        <outlet property="menuBarView" destination="WKZ-DR-kMG" id="evu-pD-yIM"/>
+                        <outlet property="menuTabsBottomView" destination="s9w-d6-hJ4" id="j9Q-ez-0Qg"/>
+                        <outlet property="menuTabsView" destination="WKZ-DR-kMG" id="evu-pD-yIM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -67,10 +78,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmc-5q-IqS">
-                                <rect key="frame" x="5" y="300" width="365" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="v3c-rX-nSy"/>
-                                </constraints>
+                                <rect key="frame" x="163.5" y="321.5" width="48" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -78,9 +86,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.40896445077710841" green="0.83972348935891372" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="U18-bZ-kCi" firstAttribute="trailing" secondItem="gmc-5q-IqS" secondAttribute="trailing" constant="5" id="WUP-1b-v7U"/>
-                            <constraint firstItem="gmc-5q-IqS" firstAttribute="top" secondItem="U18-bZ-kCi" secondAttribute="top" constant="300" id="YH3-Ba-fcc"/>
-                            <constraint firstItem="gmc-5q-IqS" firstAttribute="leading" secondItem="U18-bZ-kCi" secondAttribute="leading" constant="5" id="wph-VX-vBF"/>
+                            <constraint firstItem="gmc-5q-IqS" firstAttribute="centerY" secondItem="iSm-xi-Skw" secondAttribute="centerY" id="MtO-iY-PHm"/>
+                            <constraint firstItem="gmc-5q-IqS" firstAttribute="centerX" secondItem="iSm-xi-Skw" secondAttribute="centerX" id="aYr-2l-PO0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="U18-bZ-kCi"/>
                     </view>
