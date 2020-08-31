@@ -16,11 +16,32 @@ protocol MenuBarDelegate {
 class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
     lazy var collView: UICollectionView = {
-    
-        let layOut = UICollectionViewFlowLayout()
-        layOut.scrollDirection = .horizontal
-
-        let cv = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: layOut)
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: NSCollectionLayoutDimension.estimated(44),
+            heightDimension: NSCollectionLayoutDimension.fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(
+            layoutSize: itemSize
+        )
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 1
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: itemSize,
+            subitem: item,
+            count: 1
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        
+        let configuration = UICollectionViewCompositionalLayoutConfiguration()
+        configuration.scrollDirection = .horizontal
+        
+        let layout = UICollectionViewCompositionalLayout(section: section, configuration: configuration)
+        
+        let cv = UICollectionView.init(frame: CGRect.zero, collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
         cv.backgroundColor = .white
         cv.delegate = self
@@ -46,7 +67,10 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var menuDidSelected: ((_ collectionView: UICollectionView, _ indexPath: IndexPath)->())?
 
     var menuDelegate: MenuBarDelegate?
+    
     var cellId = "BasicCell"
+    
+    var selectedIndex: Int = -1
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,6 +85,8 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     public func select(_ index: Int) {
+        self.selectedIndex = index
+        
         let indexPath = IndexPath(item: index, section: 0)
         self.collView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
         self.collectionView(self.collView, didSelectItemAt: indexPath)
@@ -70,6 +96,9 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         collView.register(BasicCell.self, forCellWithReuseIdentifier: cellId)
         addSubview(collView)
+        
+        collView.translatesAutoresizingMaskIntoConstraints = false
+        
         addConstraintsWithFormatString(formate: "V:|[v0]|", views: collView)
         addConstraintsWithFormatString(formate: "H:|[v0]|", views: collView)
         backgroundColor = .clear
@@ -83,10 +112,17 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? BasicCell {
             cell.titleLabel.text = dataArray[indexPath.item].name
-            cell.tabInfo = dataArray[indexPath.item]
+            
+            if self.selectedIndex == indexPath.row {
+                let tabInfo = dataArray[indexPath.item]
+                cell.contentView.backgroundColor = Utils.intToUIColor(argbValue: tabInfo.color)
+                cell.titleLabel.textColor = UIColor.white
+            } else {
+                cell.contentView.backgroundColor = UIColor.gray
+                cell.titleLabel.textColor = UIColor.black
+            }
             
             return cell
         }
@@ -94,47 +130,12 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         return UICollectionViewCell()
     }
     
-    
-    
-    
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if isSizeToFitCellsNeeded {
-            
-            let sizeee = CGSize.init(width: 500, height: self.frame.height)
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            
-            let str = dataArray[indexPath.item].name
-            
-            let estimatedRect = NSString.init(string: str).boundingRect(with: sizeee, options: options, attributes: [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 23)], context: nil)
-        
-            return CGSize.init(
-                width: max(44, estimatedRect.size.width),
-                height: self.frame.height)
-
-        }
-        
-        return CGSize.init(width: (self.frame.width)/CGFloat(dataArray.count), height: self.frame.height)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedIndex = indexPath.row
         
-       // menuDidSelected?(collectionView,indexPath)
+        collectionView.reloadData()
         
-        let index = Int(indexPath.item)
-        menuDelegate?.menuBarDidSelectItemAt(menu: self, index: index)
+        menuDelegate?.menuBarDidSelectItemAt(menu: self, index: self.selectedIndex)
 
     }
     
