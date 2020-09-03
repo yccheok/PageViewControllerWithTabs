@@ -42,12 +42,30 @@ class ViewController: UIViewController {
         menuTabsView.collView.backgroundColor = UIColor.init(white: 0.97, alpha: 0.97)
         
         menuTabsView.menuDelegate = self
-        pageController.delegate = self
-        pageController.dataSource = self
         
-        // With CallBack Function...
-        //menuBarView.menuDidSelected = myLocalFunc(_:_:)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "PageControllerVC") as? PageControllerVC else {
+            fatalError("Could not instantiate PageControllerVC!!!")
+        }
+        guard let v = vc.view else {
+            fatalError("loaded PageControllerVC had no view ????")
+        }
+        addChildViewController(vc)
+        view.addSubview(v)
 
+        v.translatesAutoresizingMaskIntoConstraints = false
+        let g = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            v.topAnchor.constraint(equalTo: menuTabsView.bottomAnchor),
+            v.leadingAnchor.constraint(equalTo: g.leadingAnchor),
+            v.trailingAnchor.constraint(equalTo: g.trailingAnchor),
+            v.bottomAnchor.constraint(equalTo: g.bottomAnchor),
+        ])
+
+        vc.didMove(toParentViewController: self)
+        
+        self.pageController = vc
+        self.pageController.delegate = self
+        self.pageController.dataSource = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,26 +79,6 @@ class ViewController: UIViewController {
     func debug() {
         print("debug")
     }
-    
-    /*
-     // Call back function
-    func myLocalFunc(_ collectionView: UICollectionView, _ indexPath: IndexPath) {
-        
-        
-        if indexPath.item != currentIndex {
-            
-            if indexPath.item > currentIndex {
-                self.pageController.setViewControllers([viewController(At: indexPath.item)!], direction: .forward, animated: true, completion: nil)
-            }else {
-                self.pageController.setViewControllers([viewController(At: indexPath.item)!], direction: .reverse, animated: true, completion: nil)
-            }
-            
-            menuBarView.collView.scrollToItem(at: IndexPath.init(item: indexPath.item, section: 0), at: .centeredHorizontally, animated: true)
-            
-        }
-        
-    }
-     */
     
     //Present ViewController At The Given Index
     
