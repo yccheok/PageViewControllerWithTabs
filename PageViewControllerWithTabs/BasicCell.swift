@@ -44,17 +44,18 @@ class BasicCell: UICollectionViewCell {
         addConstraint(NSLayoutConstraint.init(item: imageView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint.init(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
 */      
-
-        BasicCell.topRoundCorners(self.contentView)
     }
     
-    private static func topRoundCorners(_ view: UIView) {
-        let maskPath = UIBezierPath(roundedRect: view.bounds,
-                    byRoundingCorners: [.topLeft, .topRight],
-                    cornerRadii: CGSize(width: 12.0, height: 12.0))
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // set the mask in layoutSubviews
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                    byRoundingCorners: [.topLeft, .topRight],
+                                    cornerRadii: CGSize(width: 12.0, height: 12.0))
         let shape = CAShapeLayer()
         shape.path = maskPath.cgPath
-        view.layer.mask = shape
+        layer.mask = shape
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -31,8 +31,7 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: itemSize,
-            subitem: item,
-            count: 1
+            subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: group)
         
@@ -117,10 +116,10 @@ class MenuTabsView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             
             if self.selectedIndex == indexPath.row {
                 let tabInfo = dataArray[indexPath.item]
-                cell.contentView.backgroundColor = Utils.intToUIColor(argbValue: tabInfo.color)
+                cell.backgroundColor = Utils.intToUIColor(argbValue: tabInfo.color)
                 cell.titleLabel.textColor = UIColor.white
             } else {
-                cell.contentView.backgroundColor = UIColor.gray
+                cell.backgroundColor = UIColor.gray
                 cell.titleLabel.textColor = UIColor.black
             }
             
